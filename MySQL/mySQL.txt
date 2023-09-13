@@ -4,3 +4,19 @@ CREATE DATABASE schoolDB;
 USE schoolDB;
 SHOW DATABASES;
 
+Challenge 2 
+
+CREATE TABLE teachers (
+    id INT PRIMARY KEY,
+    first_name VARCHAR(10),
+    last_name VARCHAR(10),
+    subject VARCHAR(10)
+);
+
+Select * from teachers;
+
+DESCRIBE teachers;
+
+INSERT INTO teachers (id, first_name, last_name, subject)
+VALUES (1, 'John', 'Doe', 'Math'),
+       (2, 'Jane', 'Smith', 'Science');
