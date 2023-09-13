@@ -13,10 +13,17 @@ CREATE TABLE teachers (
     subject VARCHAR(10)
 );
 
-Select * from teachers;
+SHOW TABLES;
 
 DESCRIBE teachers;
 
 INSERT INTO teachers (id, first_name, last_name, subject)
 VALUES (1, 'John', 'Doe', 'Math'),
        (2, 'Jane', 'Smith', 'Science');
+
+
+Challenge 3 
+
+SELECT * FROM teachers;
+
+SELECT first_name, subject FROM teachers;
