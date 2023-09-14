@@ -27,3 +27,38 @@ Challenge 3
 SELECT * FROM teachers;
 
 SELECT first_name, subject FROM teachers;
+
+Challenge 4
+
+CREATE TABLE students(
+    id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    teacher_id INT
+);
+
+INSERT INTO students(id, first_name, last_name, teacher_id)
+VALUES (1, 'Alice', 'Brown', 1),
+       (2, 'Bob', 'Johnson', 2);
+       
+SHOW TABLES;
+
+SELECT students.first_name, teachers.first_name
+FROM students
+INNER JOIN teachers ON students.teacher_id = teachers.id;
+
+SELECT students.first_name, teachers.first_name
+FROM students
+LEFT JOIN teachers ON students.teacher_id = teachers.id;
+
+SELECT students.first_name, teachers.first_name
+FROM students
+RIGHT JOIN teachers ON students.teacher_id = teachers.id;
+
+SELECT students.first_name, teachers.first_name
+FROM students
+LEFT JOIN teachers ON students.teacher_id = teachers.id
+UNION
+SELECT students.first_name, teachers.first_name
+FROM students
+RIGHT JOIN teachers ON students.teacher_id = teachers.id;
