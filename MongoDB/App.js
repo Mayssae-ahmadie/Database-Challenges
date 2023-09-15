@@ -1,41 +1,64 @@
-const express = require("express");
+const express = require('express');
+
 const app = express();
-const port = 5000;
-const cors = require("cors");
+const PORT = 5005;
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors());
-app.get("/api", (req, res) => {
-    res.send("we get response");
-
-});
-app.listen(port, () => {
-    console.log("hi");
+app.get('/api', (req, res) => {
+    res.send('Welcome to the API!');
 });
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://mayssaeahmadie:EOxoDuOkrREyFAIk@cluster0.tp4wj5n.mongodb.net/?retryWrites=true&w=majority";
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
+const { MongoClient } = require('mongodb');
+
+// Connection URI
+const uri = 'mongodb+srv://mayssaeahmadie:EOxoDuOkrREyFAIk@cluster0.tp4wj5n.mongodb.net/?retryWrites=true&w=majority/'; // Replace with your MongoDB connection string
+
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+async function connectToDatabase() {
+    try {
+        await client.connect();
+        console.log('Connected to the database');
+    } catch (error) {
+        console.error('Error connecting to the database:', error);
+    }
+}
+
+app.post('/api/users', async (req, res) => {
+    try {
+        const db = client.db('Testing'); // Replace with your database name
+        const collection = db.collection('Users');
+
+        const newUser = req.body;
+        const result = await collection.insertOne(newUser);
+
+        res.json(result.ops[0]);
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
-async function run() {
+async function addUserToDatabase() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        const db = client.db('Testing'); // Use your database name
+        const collection = db.collection('Users'); // Use your collection name
+
+        const user = { name: 'Mayssae', age: 22 };
+        const result = await collection.insertOne(user);
+
+        console.log('User added:', result.ops);
+    } catch (error) {
+        console.error('Error adding user:', error);
     } finally {
-        // Ensures that the client will close when you finish/error
+        // Close the connection after adding the user
         await client.close();
     }
 }
-run().catch(console.dir);
+// Call the function to connect
+connectToDatabase();
+
+addUserToDatabase();
