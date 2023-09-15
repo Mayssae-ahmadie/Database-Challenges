@@ -1,7 +1,7 @@
 const express = require('express');
 
 const app = express();
-const PORT = 5005;
+const PORT = 8000;
 
 app.get('/api', (req, res) => {
     res.send('Welcome to the API!');
@@ -14,7 +14,7 @@ app.listen(PORT, () => {
 const { MongoClient } = require('mongodb');
 
 // Connection URI
-const uri = 'mongodb+srv://mayssaeahmadie:EOxoDuOkrREyFAIk@cluster0.tp4wj5n.mongodb.net/?retryWrites=true&w=majority/'; // Replace with your MongoDB connection string
+const uri = 'mongodb+srv://mayssaeahmadie:EOxoDuOkrREyFAIk@cluster0.tp4wj5n.mongodb.net/?retryWrites=true&w=majority'; // Replace with your MongoDB connection string
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
